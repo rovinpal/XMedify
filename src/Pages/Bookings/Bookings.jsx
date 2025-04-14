@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import Announcement from "../../Components/AnnouncementBar/AnnouncementBar";
 import Navbar from "../../Components/Navbar/Navbar";
 import LocationSearch from "../../Components/LocationSearch/LocationSearch";
@@ -8,6 +9,9 @@ import "./Bookings.css";
 import CheckmarkIcon from "../../Assets/CheckmarkICon.png";
 
 const Bookings = () => {
+    const location = useLocation();
+    const locationState = location.state;
+
     const [medicalCenters, setMedicalCenters] = useState([]);
     const [searchedState, setSearchedState] = useState("");
 
@@ -16,6 +20,12 @@ const Bookings = () => {
         setSearchedState(state);
     };
 
+    useEffect(() => {
+        if (locationState && locationState.results) {
+            setMedicalCenters(locationState.results);
+            setSearchedState(locationState.state);
+        }
+    }, [locationState]);
 
 
     return (

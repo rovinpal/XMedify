@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { FaSearch } from 'react-icons/fa';
 import { FaUserDoctor  } from "react-icons/fa6";
 import { FaClinicMedical, FaHospital, FaPills, FaAmbulance } from "react-icons/fa";
@@ -6,6 +7,81 @@ import { FaClinicMedical, FaHospital, FaPills, FaAmbulance } from "react-icons/f
 import "./Search.css";
 
 const Search = () => {
+    const [states, setStates] = useState([]);
+    const [cities, setCities] = useState([]);
+    const [selectedState, setSelectedState] = useState("");
+    const [selectedCity, setSelectedCity] = useState("");
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const fetchStates = async () => {
+            try {
+                const response = await fetch("https://meddata-backend.onrender.com/states");
+                if (!response.ok) {
+                    throw new Error("Failed to fetch states");
+                }
+                const data = await response.json();
+                setStates(data);
+            } catch (error) {
+                console.error("Error fetching states:", error);
+            }
+        };
+
+        fetchStates();
+    }, []);
+
+
+    useEffect(() => {
+        const fetchCities = async () => {
+            if (!selectedState) {
+                setCities([]);
+                return;
+            }
+    
+            try {
+                const response = await fetch(`https://meddata-backend.onrender.com/cities/${selectedState}`);
+                if (!response.ok) {
+                    throw new Error("Failed to fetch cities");
+                }
+                const data = await response.json();
+                setCities(data);
+            } catch (error) {
+                console.error("Error fetching cities:", error);
+            }
+        };
+    
+        fetchCities();
+    }, [selectedState]);
+
+
+    const handleSearch = async () => {
+        if (!selectedState || !selectedCity) return;
+    
+        try {
+            const response = await fetch(
+                `https://meddata-backend.onrender.com/data?state=${selectedState}&city=${selectedCity}`
+            );
+            if (!response.ok) {
+                throw new Error("Failed to fetch search data");
+            }
+    
+            const data = await response.json();
+            navigate("/bookings", {
+                state: {
+                    results: data,
+                    state: selectedState,
+                    city: selectedCity
+                }
+            });
+            // onSearch(data, selectedState); 
+        } catch (error) {
+          console.error("Error fetching search data:", error);
+        }
+    };
+
+
+
+
 
     return (
         <div
@@ -29,36 +105,52 @@ const Search = () => {
             >
                 <div className="input-group">
                     <FaSearch className="input-icon" />
-                    <input 
-                        type="search" 
-                        placeholder="State"
+                    <select
+                        value={selectedState}
+                        onChange={(e) => {
+                            setSelectedState(e.target.value);
+                            setSelectedCity(""); 
+                        }}
                         style={{
                             height: "50px",
                             width: "280px",
                             backgroundColor: "#FAFBFE",
                             border: "1px solid #F0F0F0",
-                            borderRadius: "8px"
+                            borderRadius: "8px",
+                            paddingLeft: "60px"
                         }}
-                    />
+                    >
+                        <option value="">State</option>
+                        {states.map((state) => (
+                            <option key={state} value={state}>{state}</option>
+                        ))}
+                    </select>
                 </div>
 
                 <div className="input-group">
                     <FaSearch className="input-icon" />  
-                    <input 
-                        type="search" 
-                        placeholder="City"
+                    <select
+                        value={selectedCity}
+                        onChange={(e) => setSelectedCity(e.target.value)}
                         style={{
                             height: "50px",
                             width: "280px",
                             backgroundColor: "#FAFBFE",
                             border: "1px solid #F0F0F0",
-                            borderRadius: "8px"
+                            borderRadius: "8px",
+                            paddingLeft: "60px"
                         }}
-                    />
+                    >
+                        <option value="">City</option>
+                        {cities.map((city) => (
+                            <option key={city} value={city}>{city}</option>
+                        ))}
+                    </select>
                 </div>
 
                 <div>
                     <button
+                        onClick={handleSearch}
                         style={{
                             display: "flex",
                             justifyContent: "center",
