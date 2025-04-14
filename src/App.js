@@ -14,16 +14,16 @@ function App() {
       padding: 0,
     }}
     >
-      {/* <Router>
+      <Router>
         <Routes>
           <Route path="/" element={<MedHomePage />} />
           <Route path="/bookings" element={<Bookings />} />
           <Route path="/my-bookings" element={<MyBookings />} />
         </Routes>
-      </Router> */}
+      </Router>
       {/* <Bookings />
       <MyBookings /> */}
-      <SlotCalendar />
+      {/* <SlotCalendar /> */}
     </div>
   );
 }
