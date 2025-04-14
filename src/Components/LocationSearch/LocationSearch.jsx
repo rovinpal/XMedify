@@ -65,7 +65,7 @@ const LocationSearch = ({ onSearch }) => {
             }
     
             const data = await response.json();
-            onSearch(data); 
+            onSearch(data, selectedState); 
         } catch (error) {
           console.error("Error fetching search data:", error);
         }

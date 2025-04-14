@@ -9,9 +9,11 @@ import CheckmarkIcon from "../../Assets/CheckmarkICon.png";
 
 const Bookings = () => {
     const [medicalCenters, setMedicalCenters] = useState([]);
+    const [searchedState, setSearchedState] = useState("");
 
-    const handleSearchResults = (results) => {
+    const handleSearchResults = (results, state) => {
         setMedicalCenters(results);
+        setSearchedState(state);
     };
 
 
@@ -55,7 +57,7 @@ const Bookings = () => {
                 >
                     {medicalCenters.length > 0 ? (
                     <>
-                        <h2 style={{marginBottom: "-35px"}}>15 medical centers available in Alaska</h2>
+                        <h2 style={{marginBottom: "-35px"}}>15 medical centers available in {searchedState}</h2>
                         
                         <div style={{display: "flex", justifyContent: "flex-start", alignItems: "flex-end", gap: "10px"}}>
                             <img src={CheckmarkIcon} alt="CheckmarkIcon" style={{height: "20px", width: "20px"}} />
