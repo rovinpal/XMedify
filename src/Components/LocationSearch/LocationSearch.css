@@ -1,0 +1,47 @@
+.input-group {
+    position: relative;
+}
+
+  
+.input-group input {
+    width: 100%;
+    padding: 0px 0px 0px 70px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+  
+.input-icon {
+    position: absolute;
+    top: 50%;
+    left: 30px;
+    transform: translateY(-50%);
+    color: #888;
+    pointer-events: none;
+    font-size: 25px;
+}
+
+
+.button-search {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 150px;
+    width: 200px;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: 500;
+    color: #ABB6C7;
+    background-color: #FAFBFE;
+    border-style: hidden;
+}
+
+
+.button-search:hover {
+    background-color: #2AA7FF14;
+    border-style: solid;
+    border-color: #2AA7FF;
+    border-width: 2px;
+    cursor: pointer;
+}

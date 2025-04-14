@@ -1,23 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Bookings from "./Pages/Bookings/Bookings";
+import MedHomePage from "./Pages/HomePage/HomePage";
+import MyBookings from "./Pages/MyBookings/MyBookings";
+import SlotCalendar from "./Components/SlotCalendar/SlotCalendar";
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div
+    style={{
+      fontFamily: "Poppins, sans-serif",
+      margin: 0,
+      padding: 0,
+    }}
+    >
+      {/* <Router>
+        <Routes>
+          <Route path="/" element={<MedHomePage />} />
+          <Route path="/bookings" element={<Bookings />} />
+          <Route path="/my-bookings" element={<MyBookings />} />
+        </Routes>
+      </Router> */}
+      {/* <Bookings />
+      <MyBookings /> */}
+      <SlotCalendar />
     </div>
   );
 }
