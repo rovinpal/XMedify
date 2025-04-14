@@ -103,7 +103,7 @@ const Search = () => {
                     gap: "150px"
                 }}
             >
-                <div className="input-group">
+                <div className="input-group" id="state">
                     <FaSearch className="input-icon" />
                     <select
                         value={selectedState}
@@ -127,7 +127,7 @@ const Search = () => {
                     </select>
                 </div>
 
-                <div className="input-group">
+                <div className="input-group" id="city">
                     <FaSearch className="input-icon" />  
                     <select
                         value={selectedCity}
