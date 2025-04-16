@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import HeroImage from "../../Assets/HeroImage.png";
 
 const Hero = () => {
@@ -19,7 +20,8 @@ const Hero = () => {
                     <span style={{color: "#2AA7FF"}}>Centers</span>
                 </h1>
                 <p style={{color: "#5C6169", fontSize: "20px", marginBottom: "10px"}}>Connect instantly with a 24x7 specialist or choose to video visit a particular doctor.</p>
-                <button
+                <Link
+                    to="/bookings"
                     style={{
                         height: "50px",
                         width: "180px",
@@ -28,11 +30,15 @@ const Hero = () => {
                         color: "#FFFFFF",
                         borderStyle: "hidden",
                         letterSpacing: "1px",
-                        marginTop: "30px"
+                        marginTop: "30px",
+                        textDecoration: "none",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center"
                     }}
                 >
                     Find Centers
-                </button>
+                </Link>
             </div>
             <div>
                 <img 

@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Bookings from "./Pages/Bookings/Bookings";
 import MedHomePage from "./Pages/HomePage/HomePage";
 import MyBookings from "./Pages/MyBookings/MyBookings";
-import SlotCalendar from "./Components/SlotCalendar/SlotCalendar";
+// import SlotCalendar from "./Components/SlotCalendar/SlotCalendar";
 
 
 function App() {

@@ -47,9 +47,8 @@ const Navbar = () => {
                         gap: "60px"
                     }}
                 >
-                    <Link to="/bookings" style={{color: "#102851", textDecoration: "none", fontSize: "14px", fontWeight: "400"}}>Find Doctors</Link>
                     <button
-                        onClick={{}}
+                        // onClick={{}}
                         style={{
                             background: "none",
                             border: "none",
@@ -61,10 +60,11 @@ const Navbar = () => {
                             padding: 0,
                         }}
                         >
-                        Hospitals
+                        Find Doctors
                     </button>
+                    <Link to="/bookings" style={{color: "#102851", textDecoration: "none", fontSize: "14px", fontWeight: "400"}}>Hospitals</Link>
                     <button
-                        onClick={{}}
+                        // onClick={{}}
                         style={{
                             background: "none",
                             border: "none",
@@ -79,7 +79,7 @@ const Navbar = () => {
                         Medicines
                     </button>
                     <button
-                        onClick={{}}
+                        // onClick={{}}
                         style={{
                             background: "none",
                             border: "none",
@@ -94,7 +94,7 @@ const Navbar = () => {
                         Surgeries
                     </button>
                     <button
-                        onClick={{}}
+                        // onClick={{}}
                         style={{
                             background: "none",
                             border: "none",
@@ -109,7 +109,7 @@ const Navbar = () => {
                         Software for Providers
                     </button>
                     <button
-                        onClick={{}}
+                        // onClick={{}}
                         style={{
                             background: "none",
                             border: "none",

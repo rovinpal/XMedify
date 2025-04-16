@@ -56,27 +56,8 @@ const Search = () => {
 
     const handleSearch = async () => {
         if (!selectedState || !selectedCity) return;
-    
-        try {
-            const response = await fetch(
-                `https://meddata-backend.onrender.com/data?state=${selectedState}&city=${selectedCity}`
-            );
-            if (!response.ok) {
-                throw new Error("Failed to fetch search data");
-            }
-    
-            const data = await response.json();
-            navigate("/bookings", {
-                state: {
-                    results: data,
-                    state: selectedState,
-                    city: selectedCity
-                }
-            });
-            // onSearch(data, selectedState); 
-        } catch (error) {
-          console.error("Error fetching search data:", error);
-        }
+
+        navigate(`/bookings?state=${encodeURIComponent(selectedState)}&city=${encodeURIComponent(selectedCity)}`);
     };
 
 
@@ -162,7 +143,8 @@ const Search = () => {
                             borderStyle: "hidden",
                             backgroundColor: "#2AA8FF",
                             color: "white",
-                            fontSize: "15px"
+                            fontSize: "15px",
+                            cursor: "pointer",
                         }}
                     >
                         <FaSearch/>

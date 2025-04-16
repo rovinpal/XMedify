@@ -2,14 +2,16 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { FaSearch } from 'react-icons/fa';
 import { GrLocation } from "react-icons/gr";
+import { useNavigate } from "react-router-dom";
 import "./LocationSearch.css";
 
 
-const LocationSearch = ({ onSearch }) => {
+const LocationSearch = () => {
     const [states, setStates] = useState([]);
     const [cities, setCities] = useState([]);
     const [selectedState, setSelectedState] = useState("");
     const [selectedCity, setSelectedCity] = useState("");
+    const navigate = useNavigate();
 
 
     useEffect(() => {
@@ -56,18 +58,8 @@ const LocationSearch = ({ onSearch }) => {
     const handleSearch = async () => {
         if (!selectedState || !selectedCity) return;
     
-        try {
-            const response = await fetch(
-                `https://meddata-backend.onrender.com/data?state=${selectedState}&city=${selectedCity}`
-            );
-            if (!response.ok) {
-                throw new Error("Failed to fetch search data");
-            }
-    
-            const data = await response.json();
-            onSearch(data, selectedState); 
-        } catch (error) {
-          console.error("Error fetching search data:", error);
+        if (selectedState && selectedCity) {
+            navigate(`/bookings?state=${encodeURIComponent(selectedState)}&city=${encodeURIComponent(selectedCity)}`);
         }
     };
 

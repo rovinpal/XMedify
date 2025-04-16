@@ -4,8 +4,16 @@ import Announcement from "../../Components/AnnouncementBar/AnnouncementBar";
 import Navbar from "../../Components/Navbar/Navbar";
 import Hero from "../../Components/Hero/Hero";
 import Search from "../../Components/Search/Search";
-import OfferImage from "../../Assets/OfferImage.png";
+import Offers from "../../Components/Offers/Offers";
 import Footer from "../../Components/Footer/Footer";
+import DownloadApp from "../../Components/DownloadApp/DownloadApp";
+import FAQs from "../../Components/FAQs/FAQs";
+import OurFamilies from "../../Components/OurFamilies/OurFamilies";
+import Blogs from "../../Components/Blogs/Blogs";
+import PatientCaring from "../../Components/PatientCaring/PatientCaring";
+import Specialists from "../../Components/Specialists/Specialists";
+import Specialization from "../../Components/Specialization/Specialization";
+
 
 const MedHomePage = () => {
 
@@ -24,21 +32,21 @@ const MedHomePage = () => {
                 </div>
             </div>
 
-            <div style={{display: "flex", justifyContent: "space-evenly", margin: "325px 0px 100px 0px"}}>
-                <div style={{height: "200px", width: "400px"}}>
-                    <img src={OfferImage} alt="OfferImage" />
-                </div>
-                <div style={{height: "200px", width: "400px"}}>
-                    <img src={OfferImage} alt="OfferImage" />
-                </div>
-                <div style={{height: "200px", width: "400px"}}>
-                    <img src={OfferImage} alt="OfferImage" />
-                </div>
-            </div>
+            <Offers />
 
-            <div style={{height: "100px", backgroundColor: "#2AA7FF"}}>
+            <Specialization />
 
-            </div>
+            <Specialists />
+
+            <PatientCaring />
+
+            <Blogs />
+
+            <OurFamilies />
+
+            <FAQs />
+
+            <DownloadApp />
 
             <Footer />
 

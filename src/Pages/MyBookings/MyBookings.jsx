@@ -4,6 +4,7 @@ import Announcement from "../../Components/AnnouncementBar/AnnouncementBar";
 import Navbar from "../../Components/Navbar/Navbar";
 import Footer from "../../Components/Footer/Footer";
 import { FaSearch } from 'react-icons/fa';
+import DownloadApp from "../../Components/DownloadApp/DownloadApp";
 
 
 
@@ -97,10 +98,10 @@ const MyBookings = () => {
                 </div>
             </div>
 
-            <div style={{ marginBottom: "10px", paddingTop: "120px", paddingBottom: "80px", background: "linear-gradient(81deg, #E7F0FF 9.01%, rgba(232, 241, 255, 0.47) 89.11%)" }}>
+            <div style={{ paddingTop: "120px", paddingBottom: "80px", background: "linear-gradient(81deg, #E7F0FF 9.01%, rgba(232, 241, 255, 0.47) 89.11%)" }}>
             </div>
 
-
+            <DownloadApp />
             <Footer />
         </div>
     );

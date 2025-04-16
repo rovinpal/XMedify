@@ -7,26 +7,47 @@ import MedicalCenterCard from "../../Components/MedicalCenterCard/MedicalCenterC
 import Footer from "../../Components/Footer/Footer";
 import "./Bookings.css";
 import CheckmarkIcon from "../../Assets/CheckmarkICon.png";
+import DownloadApp from "../../Components/DownloadApp/DownloadApp";
+import FAQs from "../../Components/FAQs/FAQs";
 
 const Bookings = () => {
     const location = useLocation();
-    const locationState = location.state;
+    const [searchedCity, setSearchedCity] = useState("");
 
     const [medicalCenters, setMedicalCenters] = useState([]);
-    const [searchedState, setSearchedState] = useState("");
 
-    const handleSearchResults = (results, state) => {
-        setMedicalCenters(results);
-        setSearchedState(state);
-    };
+    // const handleSearchResults = (results, state) => {
+    //     setMedicalCenters(results);
+    //     setSearchedState(state);
+    // };
+
+    // useEffect(() => {
+    //     if (locationState && locationState.results) {
+    //         setMedicalCenters(locationState.results);
+    //         setSearchedState(locationState.state);
+    //     }
+    // }, [locationState]);
 
     useEffect(() => {
-        if (locationState && locationState.results) {
-            setMedicalCenters(locationState.results);
-            setSearchedState(locationState.state);
-        }
-    }, [locationState]);
+        const params = new URLSearchParams(location.search);
+        const state = params.get("state");
+        const city = params.get("city");
 
+        if (!state || !city) return;
+
+        const fetchData = async () => {
+            try {
+                const response = await fetch(`https://meddata-backend.onrender.com/data?state=${state}&city=${city}`);
+                const data = await response.json();
+                setMedicalCenters(data);
+                setSearchedCity(city); 
+            } catch (error) {
+                console.error("Error fetching search data:", error);
+            }
+        };
+
+        fetchData();
+    }, [location.search]);
 
     return (
         <div className="container">
@@ -51,7 +72,7 @@ const Bookings = () => {
                     transform: "translateX(-50%)"
                 }}
             >
-                <LocationSearch onSearch={handleSearchResults}/>
+                <LocationSearch />
             </div>
 
             <div style={{ paddingTop: "120px", paddingBottom: "80px", background: "linear-gradient(81deg, #E7F0FF 9.01%, rgba(232, 241, 255, 0.47) 89.11%)" }}>
@@ -67,7 +88,7 @@ const Bookings = () => {
                 >
                     {medicalCenters.length > 0 ? (
                     <>
-                        <h1 style={{marginBottom: "-35px"}}>{medicalCenters.length} medical centers available in {searchedState}</h1>
+                        <h1 style={{marginBottom: "-35px"}}>{medicalCenters.length} medical centers available in {searchedCity}</h1>
                         
                         <div style={{display: "flex", justifyContent: "flex-start", alignItems: "flex-end", gap: "10px"}}>
                             <img src={CheckmarkIcon} alt="CheckmarkIcon" style={{height: "20px", width: "20px"}} />
@@ -83,7 +104,9 @@ const Bookings = () => {
                     )}
                 </div>
             </div>
-
+            
+            <FAQs />
+            <DownloadApp />
             <Footer />
         </div>
     );

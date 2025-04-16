@@ -1,152 +1,203 @@
-import React from "react";
+import React, { useState } from "react";
+import {
+  Box,
+  Button,
+  Stack,
+  Typography,
+  Divider,
+} from "@mui/material";
 import HospitalIcon from "../../Assets/HospitalIcon.png";
 import RatingIcon from "../../Assets/RatingIcon.png";
 import DentalImage from "../../Assets/DentalBannerImage.png";
+import Calendar from "../SlotCalendar/SlotCalendar";
 
-const MedicalCenterCard = ({ data, index }) => {
+const MedicalCenterCard = ({ data, index, availableSlots, handleBooking }) => {
+  const [showCalendar, setShowCalendar] = useState(false);
 
-    return (
-        <div
-            style={{
-                display: "flex",
-                alignItems: "center",
-                width: "100%",
-                position: "relative",
-            }}
+  return (
+    <Box width="100%" mb={3}>
+        <Stack
+        direction={{ xs: "column", md: "row" }}
+        spacing={3}
+        sx={{
+            width: "100%",
+            mb: 0.5,
+            alignItems: "stretch",
+            fontFamily: "'Poppins', sans-serif",
+        }}
         >
-        <div
-            style={{
+        <Box
+            sx={{
+            bgcolor: "#fff",
+            borderRadius: "16px",
+            boxShadow: "0px 4px 24px rgba(0, 0, 0, 0.06)",
+            p: { xs: 2, md: 4 },
             display: "flex",
+            width: "60%",
+            minHeight: "230px",
+            flexDirection: { xs: "column", md: "row" },
+            gap: 3,
             alignItems: "center",
-            justifyContent: "space-between",
-            backgroundColor: "#fff",
-            borderRadius: "12px",
-            padding: "24px",
-            width: "65%",
-            height: "250px",
-            boxShadow: "0 8px 24px rgba(0, 0, 0, 0.08)",
             }}
         >
-            <div style={{ width: "25%", marginLeft: "10px" }}>
-                <img
-                    src={HospitalIcon}
-                    alt="Hospital Icon"
-                    style={{ width: "180px", height: "180px" }}
-                />
-            </div>
-
-            <div
-                style={{
-                    flex: 1,
-                    marginLeft: "20px",
-                    width: "45%",
-                    letterSpacing: "0.5px",
-                }}
-            >
-                <h3 style={{ margin: 0, color: "#14BEF0" }}>{data["Hospital Name"]}</h3>
-                <p style={{ marginBottom: "0px", fontWeight: "700", color: "#414146" }}>
-                    {data.City}, {data.State}
-                </p>
-                <p
-                    style={{
-                    margin: "4px 0",
-                    paddingBottom: "8px",
-                    color: "#414146",
-                    fontSize: "14px",
-                    }}
-                >
-                    {data.Address}
-                </p>
-                <p style={{ margin: "4px 0" }}>
-                    <span style={{ color: "#02A401", fontWeight: "700" }}>Free </span>
-                    <span style={{ color: "#414146", textDecoration: "line-through" }}>
-                    ₹500
-                    </span>
-                    <span style={{ color: "#414146", fontWeight: "400" }}>
-                    {" "}
-                    Consultation fee at clinic
-                    </span>
-                </p>
-                <div
-                    style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    gap: "10px",
-                    height: "20px",
-                    width: "50px",
-                    borderRadius: "5px",
-                    backgroundColor: "#02A401",
-                    padding: "2px",
-                    marginTop: "10px",
-                    }}
-                >
-                    <img src={RatingIcon} alt="Rating Icon" />
-                    <p style={{ margin: 0, color: "#FFFFFF" }}>
-                    {data["Hospital overall rating"] || "N/A"}
-                    </p>
-                </div>
-            </div>
-
-            <div
-            style={{
-                textAlign: "right",
-                width: "30%",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                alignItems: "center",
-                gap: "10px",
+            <Box
+            component="img"
+            src={HospitalIcon}
+            alt="Hospital"
+            sx={{
+                width: { xs: 80, md: 120 },
+                height: "auto",
+                flexShrink: 0,
+                alignSelf: { xs: "center", md: "start" },
             }}
-            >
-            <p style={{ margin: "4px 0", color: "#28C76F", fontWeight: 600 }}>
-                Available Today
-            </p>
-            <button
-                style={{
-                width: "220px",
-                padding: "10px 16px",
-                backgroundColor: "#2AA7FF",
-                color: "#fff",
-                border: "none",
-                borderRadius: "6px",
-                fontWeight: "600",
-                cursor: "pointer",
+            />
+
+            <Box sx={{ flex: 1 }}>
+            <Typography
+                variant="h6"
+                color="#2AA7FF"
+                fontWeight={600}
+                fontSize={{ xs: 18, md: 20 }}
+                mb={0.5}
+                textTransform="capitalize"
+                lineHeight={1.3}
+                noWrap
+                sx={{
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    whiteSpace: "nowrap",
+                    maxWidth: { xs: "100%", md: "350px" }
                 }}
             >
-                Book FREE Center Visit
-            </button>
-            </div>
-        </div>
+                {data["Hospital Name"]}
+            </Typography>
+            <Typography
+                textTransform="capitalize"
+                color="#414146"
+                fontSize={14}
+                fontWeight={600}
+                mb={0.5}
+            >
+                {`${data["City"]}, ${data["State"]}`}
+            </Typography>
+            <Typography fontSize={13} color="#414146" mb={1}>
+                {data["Address"]}
+            </Typography>
+
+            <Stack
+                direction="row"
+                spacing={1}
+                alignItems="center"
+                mb={2}
+                flexWrap="wrap"
+            >
+                <Typography fontWeight={700} color="#02A401">
+                Free
+                </Typography>
+                <Typography
+                sx={{
+                    textDecoration: "line-through",
+                    color: "#787887",
+                    fontWeight: 500,
+                }}
+                >
+                ₹500
+                </Typography>
+                <Typography fontSize={13} color="#414146">
+                Consultation fee at clinic
+                </Typography>
+            </Stack>
+
+            <Divider sx={{ borderStyle: "dashed", mb: 2 }} />
+
+            <Stack
+                direction="row"
+                alignItems="center"
+                bgcolor="#02A401"
+                py="4px"
+                px={1.5}
+                borderRadius="8px"
+                width="fit-content"
+                spacing={1}
+            >
+                <Box component="img" src={RatingIcon} width={16} />
+                <Typography fontWeight={600} fontSize={14} color="#fff">
+                {data["Hospital overall rating"] === "Not Available"
+                    ? "0"
+                    : data["Hospital overall rating"]}
+                </Typography>
+            </Stack>
+            </Box>
+
+            <Stack
+            alignItems="center"
+            justifyContent="center"
+            spacing={1.5}
+            width={{ xs: "100%", md: "180px" }}
+            >
+            <Typography color="#28C76F" fontWeight={600} fontSize={14}>
+                Available Today
+            </Typography>
+            <Button
+                variant="contained"
+                fullWidth
+                onClick={() => setShowCalendar((prev) => !prev)}
+                sx={{
+                textTransform: "none",
+                borderRadius: "8px",
+                fontWeight: 600,
+                backgroundColor: "#2AA7FF",
+                boxShadow: "none",
+                fontSize: 14,
+                py: 1.2,
+                "&:hover": {
+                    backgroundColor: "#1C91E6",
+                },
+                }}
+            >
+                {showCalendar ? "Hide Calendar" : "Book FREE Center Visit"}
+            </Button>
+            </Stack>
+        </Box>
 
         {index === 0 && (
-            <div
-                style={{
-                    width: "25%",
-                    height: "300px",
-                    marginLeft: "24px",
-                    backgroundColor: "#FFFFFF",
-                    borderRadius: "12px",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    boxShadow: "0 8px 24px rgba(0, 0, 0, 0.05)",
-                }}
+            <Box
+            sx={{
+                width: "30%",
+                borderRadius: "16px",
+                boxShadow: "0px 4px 16px rgba(0, 0, 0, 0.04)",
+                overflow: "hidden",
+                display: { xs: "none", md: "flex" },
+                alignItems: "center",
+                justifyContent: "center",
+                bgcolor: "#fff",
+            }}
             >
-                <img
-                    src={DentalImage}
-                    alt="Dental"
-                    style={{
-                    height: "80%",
-                    width: "100%",
-                    objectFit: "cover",
-                    borderRadius: "8px",
-                    }}
-                />
-            </div>
+            <Box
+                component="img"
+                src={DentalImage}
+                alt="Dental"
+                sx={{
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+                }}
+            />
+            </Box>
         )}
-        </div>
-    );
+        </Stack>
+
+        {showCalendar && (
+            <Box mt={2}>
+                <Calendar
+                    details={data}
+                    availableSlots={availableSlots || { morning: [], afternoon: [], evening: [] }}
+                    handleBooking={handleBooking}
+                />
+            </Box>
+        )}
+    </Box>  
+  );
 };
 
-export default MedicalCenterCard; 
+export default MedicalCenterCard;
