@@ -72,7 +72,7 @@ const Bookings = () => {
             <Stack spacing={4}>
               <Box>
                 <Typography variant="h4" component="h1" fontWeight={600} mb={1}>
-                  {medicalCenters.length} medical centers available in {searchedCity}
+                  {medicalCenters.length} medical centers available in {searchedCity.toLowerCase()}
                 </Typography>
 
                 <Stack direction="row" alignItems="center" spacing={1}>
