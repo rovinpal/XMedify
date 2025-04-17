@@ -2,7 +2,6 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Bookings from "./Pages/Bookings/Bookings";
 import MedHomePage from "./Pages/HomePage/HomePage";
 import MyBookings from "./Pages/MyBookings/MyBookings";
-// import SlotCalendar from "./Components/SlotCalendar/SlotCalendar";
 
 
 function App() {
@@ -21,9 +20,7 @@ function App() {
           <Route path="/my-bookings" element={<MyBookings />} />
         </Routes>
       </Router>
-      {/* <Bookings />
-      <MyBookings /> */}
-      {/* <SlotCalendar /> */}
+      
     </div>
   );
 }

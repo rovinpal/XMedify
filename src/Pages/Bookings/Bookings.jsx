@@ -1,115 +1,110 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import {
+  Box,
+  Typography,
+  Container,
+  Stack
+} from "@mui/material";
 import Announcement from "../../Components/AnnouncementBar/AnnouncementBar";
 import Navbar from "../../Components/Navbar/Navbar";
 import LocationSearch from "../../Components/LocationSearch/LocationSearch";
 import MedicalCenterCard from "../../Components/MedicalCenterCard/MedicalCenterCard";
 import Footer from "../../Components/Footer/Footer";
-import "./Bookings.css";
-import CheckmarkIcon from "../../Assets/CheckmarkICon.png";
 import DownloadApp from "../../Components/DownloadApp/DownloadApp";
 import FAQs from "../../Components/FAQs/FAQs";
+import CheckmarkIcon from "../../Assets/CheckmarkICon.png";
 
 const Bookings = () => {
-    const location = useLocation();
-    const [searchedCity, setSearchedCity] = useState("");
+  const location = useLocation();
+  const [searchedCity, setSearchedCity] = useState("");
+  const [medicalCenters, setMedicalCenters] = useState([]);
 
-    const [medicalCenters, setMedicalCenters] = useState([]);
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const state = params.get("state");
+    const city = params.get("city");
 
-    // const handleSearchResults = (results, state) => {
-    //     setMedicalCenters(results);
-    //     setSearchedState(state);
-    // };
+    if (!state || !city) return;
 
-    // useEffect(() => {
-    //     if (locationState && locationState.results) {
-    //         setMedicalCenters(locationState.results);
-    //         setSearchedState(locationState.state);
-    //     }
-    // }, [locationState]);
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          `https://meddata-backend.onrender.com/data?state=${state}&city=${city}`
+        );
+        const data = await response.json();
+        setMedicalCenters(data);
+        setSearchedCity(city);
+      } catch (error) {
+        console.error("Error fetching search data:", error);
+      }
+    };
 
-    useEffect(() => {
-        const params = new URLSearchParams(location.search);
-        const state = params.get("state");
-        const city = params.get("city");
+    fetchData();
+  }, [location.search]);
 
-        if (!state || !city) return;
+  return (
+    <Box>
+      <Announcement />
+      <Navbar />
 
-        const fetchData = async () => {
-            try {
-                const response = await fetch(`https://meddata-backend.onrender.com/data?state=${state}&city=${city}`);
-                const data = await response.json();
-                setMedicalCenters(data);
-                setSearchedCity(city); 
-            } catch (error) {
-                console.error("Error fetching search data:", error);
-            }
-        };
+      <Box
+        sx={{
+          background: "linear-gradient(91.75deg, #2AA7FF 1.4%, #0C8CE6 100.57%)",
+          borderBottomLeftRadius: 20,
+          borderBottomRightRadius: 20,
+          py: { xs: 4, md: 6 },
+        }}
+      />
 
-        fetchData();
-    }, [location.search]);
+      <Container sx={{ mt: -6, mb: 8, ml: 10, width: "80vw" }}>
+        <LocationSearch />
+      </Container>
 
-    return (
-        <div className="container">
-            <Announcement />
-            <Navbar />
+      <Box
+        sx={{
+          background: "linear-gradient(0deg, #E7F0FF 9.01%, #FFFFFF 89.11%)",
+          py: 8
+        }}
+      >
+        <Container maxWidth="xl" sx={{width: "90vw", ml: "85px"}} >
+          {medicalCenters.length > 0 ? (
+            <Stack spacing={4}>
+              <Box>
+                <Typography variant="h4" fontWeight={600} mb={1}>
+                  {medicalCenters.length} medical centers available in {searchedCity}
+                </Typography>
 
-            <div 
-                style={{
-                    height: "100px", 
-                    background: "linear-gradient(91.75deg, #2AA7FF 1.4%, #0C8CE6 100.57%)",
-                    borderBottomRightRadius: "16px",
-                    borderBottomLeftRadius: "16px",
-                    position: "relative"
-                }}
-            ></div>
+                <Stack direction="row" alignItems="center" spacing={1}>
+                  <Box
+                    component="img"
+                    src={CheckmarkIcon}
+                    alt="Checkmark"
+                    sx={{ width: 20, height: 20 }}
+                  />
+                  <Typography color="#787887">
+                    Book appointments with minimum wait-time & verified doctor details
+                  </Typography>
+                </Stack>
+              </Box>
 
-            <div
-                style={{
-                    position: "absolute",
-                    top: "175px",
-                    left: "50%",
-                    transform: "translateX(-50%)"
-                }}
-            >
-                <LocationSearch />
-            </div>
+              {medicalCenters.map((hospital, idx) => (
+                <MedicalCenterCard key={idx} data={hospital} index={idx} />
+              ))}
+            </Stack>
+          ) : (
+            <Typography variant="h5" color="text.secondary">
+              Please select a valid State and City.
+            </Typography>
+          )}
+        </Container>
+      </Box>
 
-            <div style={{ paddingTop: "120px", paddingBottom: "80px", background: "linear-gradient(81deg, #E7F0FF 9.01%, rgba(232, 241, 255, 0.47) 89.11%)" }}>
-                <div
-                    style={{
-                    width: "85vw",
-                    margin: "0 auto", 
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "32px",
-                    position: "relative"
-                    }}
-                >
-                    {medicalCenters.length > 0 ? (
-                    <>
-                        <h1 style={{marginBottom: "-35px"}}>{medicalCenters.length} medical centers available in {searchedCity}</h1>
-                        
-                        <div style={{display: "flex", justifyContent: "flex-start", alignItems: "flex-end", gap: "10px"}}>
-                            <img src={CheckmarkIcon} alt="CheckmarkIcon" style={{height: "20px", width: "20px"}} />
-                            <p style={{marginBottom: "0px", color: "#787887"}}>Book appointments with minimum wait-time & verified doctor details</p>
-                        </div>
-
-                        {medicalCenters.map((hospital, idx) => (
-                        <MedicalCenterCard key={idx} data={hospital} index={idx} />
-                        ))}
-                    </>
-                    ) : (
-                    <h3>Please Select a valid State and City.</h3>
-                    )}
-                </div>
-            </div>
-            
-            <FAQs />
-            <DownloadApp />
-            <Footer />
-        </div>
-    );
+      <FAQs />
+      <DownloadApp />
+      <Footer />
+    </Box>
+  );
 };
 
 export default Bookings;

@@ -1,110 +1,139 @@
-import React from "react";
-import "./MyBookings.css";
+import { useState, useEffect } from "react";
+import { Box, Container, Typography, Button } from "@mui/material";
 import Announcement from "../../Components/AnnouncementBar/AnnouncementBar";
 import Navbar from "../../Components/Navbar/Navbar";
 import Footer from "../../Components/Footer/Footer";
-import { FaSearch } from 'react-icons/fa';
 import DownloadApp from "../../Components/DownloadApp/DownloadApp";
+import MedicalCenterCard from "../../Components/MedicalCenterCard/MedicalCenterCard";
+import { FaSearch } from "react-icons/fa";
+
+export default function MyBookings() {
+  const [bookings, setBookings] = useState([]);
+
+  useEffect(() => {
+    const localBookings = localStorage.getItem("bookings");
+    if (localBookings) {
+      setBookings(JSON.parse(localBookings));
+    }
+  }, []);
 
 
 
-const MyBookings = () => {
+  return (
+    <>
+      <Announcement />
+      <Navbar />
 
+      <Box
+        sx={{
+          background: "linear-gradient(90deg, #2AA7FF 1.4%, #0C8CE6 100.57%)",
+          borderBottomLeftRadius: 20,
+          borderBottomRightRadius: 20,
+          py: { xs: 4, md: 6 },
+          height: "20px"
+        }}
+      >
+        <Container>
+          <Typography
+            variant="h3"
+            color="#fff"
+            fontWeight={600}
+            sx={{ fontSize: { xs: 28, md: 40 }, borderRadius: "20px"}}
+            ml={-4}
+          >
+            My Bookings
+          </Typography>
+        </Container>
+      </Box>
 
-    return (
-        <div className="container">
-            <Announcement />
-            <Navbar />
-
-            <div 
-                style={{
-                    height: "100px", 
-                    background: "linear-gradient(91.75deg, #2AA7FF 1.4%, #0C8CE6 100.57%)",
-                    borderBottomRightRadius: "16px",
-                    borderBottomLeftRadius: "16px",
-                    position: "relative"
-                }}
+      <Box
+        sx={{
+          position: "relative",
+          zIndex: 10,
+          mt: "-65px",
+          mb: 8,
+        }}
+      >
+        <Container maxWidth="xl">
+          <Box
+            sx={{
+                position: "absolute",
+                left: "30%",
+                backgroundColor: "#FFFFFF",
+                borderRadius: 2,
+                boxShadow:
+                    "-4px -4px 8px rgba(0, 0, 0, 0.05), 10px 10px 20px rgba(0,0,0,0.1)",
+                px: { xs: 2, md: 4 },
+                py: 4,
+                display: "flex",
+                flexDirection: { xs: "column", md: "row" },
+                alignItems: "center",
+                gap: 3,
+                width: "880px"
+            }}
+          >
+            <Box
+              component="select"
+              sx={{
+                width: { xs: "100%", md: "65%" },
+                height: "50px",
+                backgroundColor: "#FAFBFE",
+                border: "1px solid #F0F0F0",
+                borderRadius: "8px",
+                pl: 2,
+              }}
+              defaultValue=""
             >
-                <h1
-                    style={{
-                        color: "#FFFFFF",
-                        display: "flex",
-                        justifyContent: "flex-start",
-                        marginTop:"0px",
-                        paddingTop: "45px",
-                        paddingLeft: "200px"
-                    }}
-                >
-                    My Bookings
-                </h1>
-            </div>
+              <option value="">Search By Hospital</option>
+            </Box>
 
-            <div
-                style={{
-                    position: "absolute",
-                    top: "175px",
-                    left: "66%",
-                    width: "800px",
-                    height: "125px",
-                    transform: "translateX(-50%)",
-                    backgroundColor: "#FFFFFF",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    gap: "20px",
-                    borderRadius: "14px",
-                    boxShadow: "-4px -4px 8px rgba(0, 0, 0, 0.05), 10px 10px 20px rgba(0,0,0,0.1)",
-                }}
+            <Button
+              variant="contained"
+              size="large"
+              sx={{
+                height: "50px",
+                width: "30%",
+                px: 4,
+                backgroundColor: "#2AA8FF",
+                color: "#fff",
+                gap: 1.5,
+                borderRadius: "8px"
+              }}
+              endIcon={<FaSearch />}
             >
-                <div className="input-group" id="city">
-                    <select
-                        value={{}}
-                        onChange={{/*(e) => setSelectedCity(e.target.value)*/}}
-                        style={{
-                            height: "50px",
-                            width: "500px",
-                            backgroundColor: "#FAFBFE",
-                            border: "1px solid #F0F0F0",
-                            borderRadius: "8px",
-                            paddingLeft: "80px"
-                        }}
-                    >
-                        <option value="">Search By Hospital</option>
-                    </select>
-                </div>
+              Search
+            </Button>
+          </Box>
+        </Container>
+      </Box>
 
-                <div>
-                    <button
-                        type="submit"
-                        onClick={{/*handleSearch*/}}
-                        style={{
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                            gap: "20px",
-                            height: "50px",
-                            width: "150px",
-                            borderRadius: "8px",
-                            borderStyle: "hidden",
-                            backgroundColor: "#2AA8FF",
-                            color: "white",
-                            fontSize: "15px",
-                            cursor: "pointer"
-                        }}
-                    >
-                        <FaSearch/>
-                        Search
-                    </button>
-                </div>
-            </div>
+      <Box
+        sx={{
+          background: "linear-gradient(0deg, #E7F0FF 9.01%, #FFFFFF 89.11%)",
+          py: 10,
+          mt: 15,
+        }}
+      >
+        <Container sx={{ width: "90vw", margin: "0 auto" }}>
+           {bookings.length > 0 ? (
+            bookings.map((booking, index) => (
+              <MedicalCenterCard
+                key={index}
+                data={booking}
+                index={index}
+                booking={true}
+              />
+            ))
+          ) : (
+            <Typography variant="h5" textAlign="center" fontWeight={500}>
+              No bookings to show.
+            </Typography>
+          )}
+        </Container>
+      </Box>
 
-            <div style={{ paddingTop: "120px", paddingBottom: "80px", background: "linear-gradient(81deg, #E7F0FF 9.01%, rgba(232, 241, 255, 0.47) 89.11%)" }}>
-            </div>
-
-            <DownloadApp />
-            <Footer />
-        </div>
-    );
-};
-
-export default MyBookings;
+      <DownloadApp />
+      <Footer />
+    </>
+  );
+}

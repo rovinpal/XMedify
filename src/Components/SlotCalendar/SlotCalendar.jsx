@@ -1,22 +1,22 @@
-import DaySelector from "./DaySelect/DaySelect";
-import { Box, Typography } from "@mui/material";
+import DaySelector from "../../Components/SlotCalendar/DaySelect/DaySelect";
+import { Box } from "@mui/material";
 import { useState } from "react";
 import { startOfDay } from "date-fns";
-import TimeSlotPicker from "./TimeSelect/TimeSelect";
+import TimeSlotPicker from "../../Components/SlotCalendar/TimeSelect/TimeSelect";
 
-export default function Calendar({ availableSlots, details, handleBooking }) {
+const Calendar = ({ details, handleBooking }) => {
   const [selectedDate, setSelectedDate] = useState(startOfDay(new Date()));
 
-  const morning = availableSlots?.morning || [];
-  const afternoon = availableSlots?.afternoon || [];
-  const evening = availableSlots?.evening || [];
-  
-  const totalSlots = morning.length + afternoon.length + evening.length;
-  
+  const availableSlots = {
+    morning: ["11:30 AM"],
+    afternoon: ["12:00 PM", "12:30 PM", "01:30 PM", "02:00 PM", "02:30 PM"],
+    evening: ["06:00 PM", "06:30 PM", "07:00 PM", "07:30 PM"],
+  };
 
-    if (!availableSlots || !availableSlots.morning || !availableSlots.afternoon || !availableSlots.evening) {
-      return <Typography>Loading slots...</Typography>; 
-    }
+  const totalSlots =
+    availableSlots.morning.length +
+    availableSlots.afternoon.length +
+    availableSlots.evening.length;
 
   return (
     <Box>
@@ -34,3 +34,5 @@ export default function Calendar({ availableSlots, details, handleBooking }) {
     </Box>
   );
 }
+
+export default  Calendar;
