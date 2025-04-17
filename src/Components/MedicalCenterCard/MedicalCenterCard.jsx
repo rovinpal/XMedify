@@ -58,6 +58,7 @@ const MedicalCenterCard = ({ data, index, availableSlots, handleBooking, booking
             <Box flex={1}>
               <Typography
                 variant="h6"
+                component="h3"
                 color="#2AA7FF"
                 fontWeight={600}
                 fontSize={{ xs: 18, md: 20 }}

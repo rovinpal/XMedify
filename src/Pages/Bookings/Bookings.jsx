@@ -71,7 +71,7 @@ const Bookings = () => {
           {medicalCenters.length > 0 ? (
             <Stack spacing={4}>
               <Box>
-                <Typography variant="h4" fontWeight={600} mb={1}>
+                <Typography variant="h4" component="h1" fontWeight={600} mb={1}>
                   {medicalCenters.length} medical centers available in {searchedCity}
                 </Typography>
 

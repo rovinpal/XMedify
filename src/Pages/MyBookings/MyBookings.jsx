@@ -36,6 +36,7 @@ export default function MyBookings() {
         <Container>
           <Typography
             variant="h3"
+            component="h1"
             color="#fff"
             fontWeight={600}
             sx={{ fontSize: { xs: 28, md: 40 }, borderRadius: "20px"}}
